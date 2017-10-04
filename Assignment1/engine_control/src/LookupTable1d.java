@@ -43,15 +43,20 @@ class LookupTable1d {
 		int i = si.getIntPart();
 		int f = si.getFracPart();
 		int v = lookupValues[i];
-		if(i<lookupValues.length-1) {
+		if(i<lookupValues.length-1) { // If i == lookupValues.length - 1 then value is max.
 			int vn = lookupValues[i+1];
-			v = v + f;
+			//! MISTAKE: evidence is compile time warning !
+			//v = v + f;
+			v = v + (vn - v) * f / 100;
 		}
 		// ASSERTION(S)
 		// (note, what you want to check here would normally
 		//  be part of the postcondition, but would produce a very
 		//  elaborate specification).
 		
+		//@ assert v >= lookupValues[i];
+		//@ assert i != lookupValues.length-1 <==> v <= lookupValues[i+1];
+		// assert i == lookupValues.length - 1 || v <= lookupValues[i+1];
 		
 		return v;
 	}

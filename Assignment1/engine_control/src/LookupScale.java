@@ -75,16 +75,26 @@ class LookupScale {
 			intPart--;
 		}
 		// ASSERTION
+		//@ assert intPart >= 0;
+		//! MISTAKE: can be minus but should be put back to zero!
+		if (intPart < 0) intPart = 0;
+		
 		int fracPart = 0;
 		// Check border cases
-		//if(intPart == this.values.length - 1 || v < this.values[0]) {
 		if(intPart == this.values.length - 1 || v < this.values[0]) {
 			// ASSERTION(S)
+			//? Why not use the expression of the if loop.
+			//@ assert intPart == this.values.length - 1 || intPart == 0;
+			//@ assert fracPart == 0;
 			return new ScaleIndex(intPart, fracPart, this.values.length);
 		}
 		// Then calculate the fractional part
 		fracPart = (v - this.values[intPart]) * 100 / (this.values[intPart+1] - this.values[intPart]);
 		// ASSERTION(S)
+		//@ assert intPart >= 0 && intPart < this.values.length;
+		//@ assert fracPart >= 0 && fracPart < 100;
+		//@ assert fracPart == (v - this.values[intPart]) * 100 / (this.values[intPart+1] - this.values[intPart]);
+		
 		return new ScaleIndex(intPart, fracPart, this.values.length);
 	}
 

@@ -15,14 +15,11 @@ class IgnitionModule {
 		new int[] { 120,  80,  60,  80, 100, 120, 140, 160,
 			         180, 200, 220, 250, 300, 320, 340, 360	});
 	
-	//@ requires rpmSensor != null;
-	//@ ensures this.rpmSensor == rpmSensor;
 	IgnitionModule(SensorValue rpmSensor) {
 		this.rpmSensor = rpmSensor;
 	}
 	
-	//@ ensures \result == ignitionTable.getValue(rpmSensor);
-	/*@pure;*/int getIgnition() {
+	int getIgnition() {
 		return ignitionTable.getValue(rpmSensor);
 
 	}
