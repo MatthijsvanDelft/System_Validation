@@ -15,7 +15,9 @@ class ScaleIndex {
 	int size;      
 
 	// INVARIANT(S)
-	//Minimum size probably
+	//@ invariant intPart >= 0 && intPart <= size;
+	//@ invariant intPart == size ==> fracPart == 0;
+	//@ invariant fracPart >= 0 && fracPart < 100; 
 	//@ invariant size > 0;
 	// MODEL
 
@@ -26,12 +28,16 @@ class ScaleIndex {
 	 * @param size the size of the underlying scale
 	 */
 	// CONTRACT
-	//@ requires intPart >= 0;
-	//@ requires fracPart >= 0;
-	//@ requires size > 0;
-	//@ ensures this.intPart == intPart;
-	//@ ensures this.fracPart == fracPart;
-	//@ ensures this.size == size;
+	/*@ normal_behavior
+	  @ requires intPart >= 0 && intPart <= size;
+	  @ requires intPart == size ==> fracPart == 0;
+	  @ requires fracPart >= 0 && fracPart < 100; 
+	  @ requires size > 0;
+	  @ ensures this.intPart == intPart;
+	  @ ensures this.fracPart == fracPart;
+	  @ ensures this.size == size;
+	  @ assignable this.intPart, this.fracPart, this.size;
+	  @*/
 	ScaleIndex(int intPart, int fracPart, int size) {
 		this.intPart = intPart;
 		this.fracPart = fracPart;
@@ -42,8 +48,10 @@ class ScaleIndex {
 	 * @return the integral part
 	 */
 	// CONTRACT
-	//@ ensures \result == intPart;
-	/*@ pure;*/int getIntPart() {
+	/*@ normal_behavior
+	  @ ensures \result == intPart;
+	  @*/
+	/*@ pure;*/ int getIntPart() {
 		return intPart;
 	}
 
@@ -51,8 +59,10 @@ class ScaleIndex {
 	 * @return the fractional part
 	 */
 	// CONTRACT
-	//@ ensures \result == fracPart;
-	/*@ pure;*/int getFracPart() {
+	/*@ normal_behavior
+	  @ ensures \result == fracPart;
+	  @*/
+	/*@ pure;*/ int getFracPart() {
 		return fracPart;
 	}
 
@@ -60,8 +70,10 @@ class ScaleIndex {
 	 * @return the size of the underlying scale
 	 */
 	// CONTRACT
-	//@ ensures \result == size;
-	/*@ pure;*/int getSize() {
+	/*@ normal_behavior
+	  @ ensures \result == size;
+	  @*/
+	/*@ pure;*/ int getSize() {
 		return size;
 	}
 

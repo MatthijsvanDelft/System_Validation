@@ -11,9 +11,9 @@ class LookupTable1d {
 	 */
 	int[] lookupValues;
 	
-	// INVARIANT
-	//@ invariant lookupValues != null;
-	//@ invariant scaleX != null;
+	// INVARIANT(S)
+	//@ invariant lookupValues.length > 1;
+	//@ invariant scaleX.values.length == lookupValues.length;
 	
 	/**
 	 * Constructs the lookup table
@@ -21,8 +21,13 @@ class LookupTable1d {
 	 * @param lookupValues the table values
 	 */
 	// CONTRACT 
-	//@ ensures this.scaleX == scale;
-	//@ ensures this.lookupValues == lookupValues;
+	/*@ normal_behavior
+	  @ requires lookupValues.length > 1;
+	  @ requires scale.values.length == lookupValues.length;
+	  @ ensures this.scaleX == scale;
+	  @ ensures this.lookupValues == lookupValues;
+	  @ assignable this.scaleX, this.lookupValues;
+	  @*/
 	LookupTable1d(LookupScale scale, int[] lookupValues) {
 		this.scaleX = scale;
 		this.lookupValues = lookupValues;
@@ -33,7 +38,7 @@ class LookupTable1d {
 	 * @param sv the sensor value to look up
 	 * @return the (interpolated) value from the table
 	 */
-	/*@pure;*/int getValue(SensorValue sv) {
+	/*@pure;*/ int getValue(SensorValue sv) {
 		ScaleIndex si = scaleX.lookupValue(sv);
 		int i = si.getIntPart();
 		int f = si.getFracPart();
@@ -46,7 +51,8 @@ class LookupTable1d {
 		// (note, what you want to check here would normally
 		//  be part of the postcondition, but would produce a very
 		//  elaborate specification).
-		//@ assert v <= v + f;
+		
+		
 		return v;
 	}
 }

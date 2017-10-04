@@ -12,7 +12,7 @@ class LookupTableLinear {
 	int range;
 	
 	// INVARIANT
-	// Range??
+	//@ invariant range > 0;
 	
 	/**
 	 * Constructs a new linear lookup table
@@ -20,19 +20,22 @@ class LookupTableLinear {
 	 * @param range the value range
 	 */
 	// CONTRACT				startVAlue && range ???
-	//@ requires startValue >= 0;
-	//@ requires range >= 0;	
-	//@ ensures this.startValue == startValue;
-	//@ ensures this.range == range;
+	/*@ normal_behavior
+	  @ requires range > 0;
+	  @ ensures this.startValue == startValue;
+	  @ ensures this.range == range;
+	  @ assignable this.startValue, this.range;
+	  @*/
 	LookupTableLinear(int startValue, int range) {
 		this.startValue = startValue;
 		this.range = range;
 	}
 	
 	// CONTRACT
-	//@ requires si != null;
-	//@ ensures \result == (this.startValue + (range * ((si.getIntPart()*100 + si.getFracPart())/si.getSize())) / 100);
-	/*@ pure;*/int getValue(ScaleIndex si) {
+	/*@ normal_behavior
+	  @ ensures \result == (this.startValue + (range * ((si.getIntPart()*100 + si.getFracPart())/si.getSize())) / 100);
+	  @*/
+	/*@ pure;*/ int getValue(ScaleIndex si) {
 		return this.startValue + (range * ((si.getIntPart()*100 + si.getFracPart())/si.getSize())) / 100;
 	}
 }

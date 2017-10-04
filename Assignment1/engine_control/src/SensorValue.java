@@ -11,11 +11,11 @@ class SensorValue {
 	final int minValue;
 	final int maxValue;
 
-	// INVARIANT(S)		failsafe??
-	//@ invariant value >= 0;
-	//@ invariant minValue >= 0;
-	//@ invariant maxValue <= 8000 && maxValue > minValue;
-	//@ invariant failSafe > minValue && failSafe < maxValue;
+	// INVARIANT(S)
+	//@ invariant minValue <= maxValue;
+	//@ invariant minValue <= value && value <= maxValue;
+	//@ invariant failSafe >= minValue && failSafe <= maxValue;
+	//? Do we need to repeat the invariant?
 	
 	/**
 	 * @param failSafe the default fail-safe value for this sensor
@@ -23,10 +23,16 @@ class SensorValue {
 	 * @param maxValue maximum allowable value for this sensor
 	 */
 	// CONTRACT
-	//@ ensures this.failSafe == failSafe;
-	//@ ensures this.minValue == minValue;
-	//@ ensures this.maxValue == maxValue;
-	//@ ensures this.value == failSafe;
+	/*@ normal_behavior
+	  @ requires minValue <= failSafe;
+	  @ requires failSafe <= maxValue;
+	  @ requires minValue <= maxValue;
+	  @ ensures this.failSafe == failSafe;
+	  @ ensures this.minValue == minValue;
+	  @ ensures this.maxValue == maxValue;
+	  @ ensures this.value == failSafe;	  
+	  @ assignable this.failSafe, this.minValue, this.maxValue, this.value;
+	  @*/
 	SensorValue(int failSafe, int minValue, int maxValue) {
 		this.failSafe = failSafe;
 		this.minValue = minValue;
@@ -40,13 +46,13 @@ class SensorValue {
 	 * @param newValue newly read value
 	 */
 	// CONTRACT
-	/*@ 
+	/*@ normal_behavior
 	  @ requires (newValue < this.minValue || newValue > this.maxValue);
 	  @ ensures this.value == this.failSafe;
 	  @ also
 	  @ requires (newValue >= this.minValue && newValue <= this.maxValue);
 	  @ ensures this.value == newValue;
-	 */
+	  @*/
 	void readSensor(int newValue) {
 		if(newValue < this.minValue || newValue > this.maxValue) {
 			this.value = this.failSafe;
@@ -59,7 +65,9 @@ class SensorValue {
 	 * @return the most recently read value
 	 */
 	// CONTRACT
-	//@ ensures \result == this.value;
+	/*@ normal_behavior
+	  @ ensures \result == this.value;
+	  @*/
 	/*@ pure;*/int getValue() {
 		return this.value;
 	}
