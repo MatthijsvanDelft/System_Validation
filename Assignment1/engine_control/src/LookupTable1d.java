@@ -55,8 +55,8 @@ class LookupTable1d {
 		//  elaborate specification).
 		
 		//@ assert v >= lookupValues[i];
-		//@ assert i != lookupValues.length-1 <==> v <= lookupValues[i+1];
-		// assert i == lookupValues.length - 1 || v <= lookupValues[i+1];
+		// assert i != lookupValues.length-1 <==> v <= lookupValues[i+1];
+		//@ assert i == lookupValues.length - 1 || v <= lookupValues[i+1];
 		
 		return v;
 	}
