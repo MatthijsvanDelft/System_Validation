@@ -9,7 +9,7 @@ class LookupScale {
 
 	// INVARIANT(S)
 	//@ invariant this.values.length > 1;
-	//@ invariant (\forall int i; i>0 && i < this.values.length; this.values[i] > this.values[i - 1]);
+	//@ invariant (\forall int k; k>0 && k<this.values.length; this.values[k-1] < this.values[k]);
 
 	
 	/**
@@ -35,11 +35,11 @@ class LookupScale {
 	 * @param size number of break points in the scale
 	 */
 	// CONTRACT 
+	// ensures (\forall int i; i > 0 && i < this.values.length; this.values[i] == (this.values[i-1] + (max - min) / (size - 1)));
+	// ensures this.values[0] == min;
 	/*@ normal_behavior
 	  @ requires min < max;
 	  @ requires size > 1;
-	  @ ensures this.values[0] == min;
-	  @ ensures (\forall int i; i > 0 && i < this.values.length; this.values[i] == (this.values[i-1] + (max - min) / (size - 1)));
 	  @ ensures this.values.length == size;
 	  @ assignable this.values[*], this.values;
 	  @*/
@@ -48,13 +48,18 @@ class LookupScale {
 		int chunk = (max - min) / (size - 1);
 		//@ assume chunk > 0;
 		this.values[0] = min;
-		/*@ loop_invariant i >= 1 && i < this.values.length;
-		  @ loop_invariant (\forall int j; j > 0 && j <= i; this.values[j] > this.values[j-1]);
-		  @ decreases this.values.length - i;
-		  */
+
+		// ERROR: compile internal error when using decreases??\
+		// loop_invariant this.values[0] == min;
+		// loop_invariant this.values.length == size;
+		//@ loop_invariant i>=1 && i<=this.values.length;
+		//@ loop_invariant (\forall int k; k>0 && k<i; this.values[k-1] < this.values[k]);
+		// decreases this.values.length - i;
 		for(int i=1; i<this.values.length; i++) {
 		  this.values[i] = this.values[i-1] + chunk;
 		}
+		
+		
 	}	
 
 	/**
@@ -74,6 +79,8 @@ class LookupScale {
 		// First get the integral part
 		// The most convenient way to lookup scales is from the end
 		int intPart = this.values.length - 1;
+		//@ loop_invariant intPart >= 0;
+		//@ decreases intPart;
 		while(intPart >= 0) {
 			if(v >= this.values[intPart]) {
 				break;
@@ -108,7 +115,7 @@ class LookupScale {
 	 * Provide a human readable version of this object, makes 
 	 * the output of JMLUnitNG more readable.
 	 */
-	//@ skipesc;
+	// skipesc;
 	public String toString() {
 		String r = "Scale of size "+this.values.length+": [";
 		for(int i = 0; i<this.values.length; i++) {

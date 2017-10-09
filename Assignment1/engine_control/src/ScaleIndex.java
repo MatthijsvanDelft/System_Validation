@@ -19,6 +19,7 @@ class ScaleIndex {
 	//@ invariant intPart == size ==> fracPart == 0;
 	//@ invariant fracPart >= 0 && fracPart < 100; 
 	//@ invariant size > 0;
+	
 	// MODEL
 
 	/**

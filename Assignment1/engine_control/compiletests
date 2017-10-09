@@ -1,7 +1,8 @@
 #!/bin/bash
-
-export JAVA_HOME=/usr/local/jdk_se7
-export PATH=$JAVA_HOME/bin:$PATH
 export JMLUNITNG_DIR=/usr/local/jmlunitng-1.4
+
+mkdir -p testbin
+
+java -jar /home/fmt/openjml/openjml.jar -rac  -racCheckAssumptions -noPurityCheck -d testbin src/*.java
 
 javac -cp $JMLUNITNG_DIR/lib/jmlunitng.jar:testbin -d testbin tests/*.java
