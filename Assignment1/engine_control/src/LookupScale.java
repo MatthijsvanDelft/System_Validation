@@ -43,7 +43,7 @@ class LookupScale {
 	  @ requires size > 1;
 	  @ ensures this.values.length == size;
 	  @ ensures this.values[0] == min;
-	  @ assignable this.values[*], this.values;
+	  @ assignable this.values[*];
 	  @*/
 	LookupScale(int min, int max, int size) {
 		this.values = new int[size];
@@ -54,8 +54,6 @@ class LookupScale {
 		// loop_inv 4 (forall) causes time-out!
 
 		// ERROR: compile internal error when using decreases??\
-		//@ loop_invariant this.values[0] == min;
-		//@ loop_invariant this.values.length == size;
 		//@ loop_invariant i>=1 && i<=this.values.length;
 		//@ loop_invariant (\forall int k; k>0 && k<i; this.values[k-1] < this.values[k]);
 		// decreases this.values.length - i;
