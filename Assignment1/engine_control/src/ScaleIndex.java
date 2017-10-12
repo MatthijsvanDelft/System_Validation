@@ -52,7 +52,7 @@ class ScaleIndex {
 	/*@ normal_behavior
 	  @ ensures \result == intPart;
 	  @*/
-	/*@ pure;*/ int getIntPart() {
+	/*@ pure @*/ int getIntPart() {
 		return intPart;
 	}
 
@@ -63,7 +63,7 @@ class ScaleIndex {
 	/*@ normal_behavior
 	  @ ensures \result == fracPart;
 	  @*/
-	/*@ pure;*/ int getFracPart() {
+	/*@ pure @*/ int getFracPart() {
 		return fracPart;
 	}
 
@@ -74,7 +74,7 @@ class ScaleIndex {
 	/*@ normal_behavior
 	  @ ensures \result == size;
 	  @*/
-	/*@ pure;*/ int getSize() {
+	/*@ pure @*/ int getSize() {
 		return size;
 	}
 

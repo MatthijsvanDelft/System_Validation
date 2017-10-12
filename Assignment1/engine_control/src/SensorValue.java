@@ -15,7 +15,6 @@ class SensorValue {
 	//@ invariant minValue <= maxValue;
 	//@ invariant minValue <= value && value <= maxValue;
 	//@ invariant failSafe >= minValue && failSafe <= maxValue;
-	//? Do we need to repeat the invariant?
 	
 	/**
 	 * @param failSafe the default fail-safe value for this sensor
@@ -50,6 +49,7 @@ class SensorValue {
 	  @ requires (newValue < this.minValue || newValue > this.maxValue);
 	  @ ensures this.value == this.failSafe;
 	  @ also
+	  @ normal_behavior
 	  @ requires (newValue >= this.minValue && newValue <= this.maxValue);
 	  @ ensures this.value == newValue;
 	  @*/
@@ -68,7 +68,7 @@ class SensorValue {
 	/*@ normal_behavior
 	  @ ensures \result == this.value;
 	  @*/
-	/*@ pure;*/int getValue() {
+	/*@ pure @*/int getValue() {
 		return this.value;
 	}
 	

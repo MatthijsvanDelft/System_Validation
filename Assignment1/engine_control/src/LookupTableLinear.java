@@ -12,7 +12,7 @@ class LookupTableLinear {
 	int range;
 	
 	// INVARIANT
-	//@ invariant range > 0;
+	//  invariant range > 0;
 	
 	/**
 	 * Constructs a new linear lookup table
@@ -35,7 +35,7 @@ class LookupTableLinear {
 	/*@ normal_behavior
 	  @ ensures \result == (this.startValue + (range * ((si.getIntPart()*100 + si.getFracPart())/si.getSize())) / 100);
 	  @*/
-	/*@ pure;*/ int getValue(ScaleIndex si) {
+	/*@ pure @*/ int getValue(ScaleIndex si) {
 		return this.startValue + (range * ((si.getIntPart()*100 + si.getFracPart())/si.getSize())) / 100;
 	}
 }

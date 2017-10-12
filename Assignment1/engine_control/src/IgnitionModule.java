@@ -15,6 +15,10 @@ class IgnitionModule {
 		new int[] { 120,  80,  60,  80, 100, 120, 140, 160,
 			         180, 200, 220, 250, 300, 320, 340, 360	});
 	
+	/*@ normal_behavior
+	  @ ensures this.rpmSensor == rpmSensor;
+	  @ assignable this.rpmSensor;
+	  @*/
 	IgnitionModule(SensorValue rpmSensor) {
 		this.rpmSensor = rpmSensor;
 	}

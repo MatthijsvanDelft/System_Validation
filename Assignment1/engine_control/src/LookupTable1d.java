@@ -38,7 +38,7 @@ class LookupTable1d {
 	 * @param sv the sensor value to look up
 	 * @return the (interpolated) value from the table
 	 */
-	/*@pure;*/ int getValue(SensorValue sv) {
+	/*@ pure @*/ int getValue(SensorValue sv) {
 		ScaleIndex si = scaleX.lookupValue(sv);
 		int i = si.getIntPart();
 		int f = si.getFracPart();
