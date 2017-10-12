@@ -107,6 +107,7 @@ class LookupScale {
 			int intPart = this.values.length - 1;
 			//@ loop_invariant intPart>=-1;
 		    //@ loop_invariant intPart<this.values.length;
+			// No decreases because intPart can remain if directly break.
 			while(intPart >= 0) {
 				if(v >= this.values[intPart]) {
 					break;
